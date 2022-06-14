@@ -8,14 +8,24 @@
     <title>Snake</title>
   </head>
   <body>
-    <div></div>
     <header>
       <h1>Herbs Snake</h1>
     </header>
 
-    <canvas id="snakeGame" width="400" height="400"></canvas>
+    <!-- GAME SCREEN -->
     <div class="container">
+      <canvas id="snakeGame" width="400" height="400"></canvas>
       <h3 id="score"></h3>
+      <button id="restart-btn">Restart!</button>
+    </div>
+
+    <div id="gameOver">
+      <img
+        src="images/game_over.png"
+        width="400"
+        height="400"
+        alt="game-over"
+      />
     </div>
     <script src="index.js"></script>
     <!-- <script src="cabeza.js"></script> -->

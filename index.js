@@ -2,6 +2,7 @@ const canvas = document.getElementById("snakeGame");
 const ctx = canvas.getContext("2d");
 
 const scoreElement = document.getElementById("score");
+const gameOverScreen = document.getElementById("gameOver");
 
 let scorePoints = 0;
 
@@ -166,7 +167,7 @@ function gameOver() {
   for (let i = 0; i < snakeParts.length; i++) {
     if (snakeParts[i].x === headX && snakeParts[i].y === headY) {
       gameIsOver = true;
-
+      gameOverScreen.style.display = "block";
       break;
     }
   }
@@ -207,3 +208,9 @@ function Keys(e) {
 }
 
 drawGame();
+// EVENT LISTSENERS
+
+const restartGame = document.getElementById("restart-btn");
+restartGame.addEventListener("click", () => {
+  window.location.reload();
+});
