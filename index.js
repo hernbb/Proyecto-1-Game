@@ -1,12 +1,20 @@
 const canvas = document.getElementById("snakeGame");
 const ctx = canvas.getContext("2d");
 
+const scoreElement = document.getElementById("score");
+
+let scorePoints = 0;
+
+scoreElement.innerText = "Score: " + scorePoints;
+
 class SnakePart {
   constructor(x, y) {
     this.x = x;
     this.y = y;
   }
 }
+
+let gameIsOver = false;
 
 let tileCount = 20;
 let tileSize = canvas.width / tileCount - 2;
@@ -15,13 +23,19 @@ let headX = 10;
 let headY = 10;
 
 const snakeParts = [];
+
 let tailLength = 2;
 
 let xVelocity = 0;
 let yVelocity = 0;
 
-let foodX = 5;
-let foodY = 5;
+let foodX = Math.floor(Math.random() * tileCount);
+let foodY = Math.floor(Math.random() * tileCount);
+
+let slowAppleX = Math.floor(Math.random() * tileCount);
+let slowAppleY = Math.floor(Math.random() * tileCount);
+
+let velocidadMovimiento = 3;
 
 let cabezaImage = new Image();
 cabezaImage.src = "images/New Head abajo.png";
@@ -29,17 +43,27 @@ let foodImage = new Image();
 foodImage.src = "images/manzana roja.png";
 let cuerpoImage = new Image();
 cuerpoImage.src = "images/cuerpo .png";
+let manzanaSlow = new Image();
+manzanaSlow.src = "images/apple.png ";
 
 //game loop
 
 function drawGame() {
-  clearScreen();
-  //   console.log("draw game");
   changeSnakePosition();
+
+  gameOver();
+
+  clearScreen();
+
   checkFoodCollision();
   drawFood();
   drawSnake();
-  setTimeout(drawGame, 100); /*setTimeOut give the opportunity to change 
+  if (!gameIsOver) {
+    setTimeout(drawGame, 800 / velocidadMovimiento);
+  }
+  console.log(gameIsOver);
+
+  /*setTimeOut give the opportunity to change 
   how often are our screen get updated*/
 }
 
@@ -52,13 +76,13 @@ function drawSnake() {
     headX = tileCount - 1;
   }
   if (headX > tileCount - 1) {
-    headX = 0;
+    headX = -1;
   }
   if (headY < 0) {
     headY = tileCount - 1;
   }
   if (headY > tileCount - 1) {
-    headY = 0;
+    headY = -1;
   }
 
   for (let i = 0; i < snakeParts.length; i++) {
@@ -97,12 +121,42 @@ function drawFood() {
     tileSize,
     tileSize
   );
+  if (scorePoints % 10 === 0) {
+    ctx.drawImage(
+      manzanaSlow,
+      slowAppleX * tileCount,
+      slowAppleY * tileCount,
+      tileSize,
+      tileSize
+    );
+  }
 }
 function checkFoodCollision() {
+  //console.log(headX, headY);
   if (foodX === headX && foodY === headY) {
     foodX = Math.floor(Math.random() * tileCount);
     foodY = Math.floor(Math.random() * tileCount);
     tailLength++;
+    velocidadMovimiento++;
+    scorePoints++;
+    scoreElement.innerText = "Score: " + scorePoints;
+  }
+  if (slowAppleX === headX && slowAppleY === headY) {
+    slowAppleX = Math.floor(Math.random() * tileCount);
+    slowAppleY = Math.floor(Math.random() * tileCount);
+    velocidadMovimiento--;
+  }
+}
+function gameOver() {
+  if (xVelocity === 0 && yVelocity === 0) {
+    return false;
+  }
+  for (let i = 0; i < snakeParts.length; i++) {
+    if (snakeParts[i].x === headX && snakeParts[i].y === headY) {
+      gameIsOver = true;
+
+      break;
+    }
   }
 }
 
@@ -112,36 +166,28 @@ function Keys(e) {
   //Source https://css-tricks.com/snippets/javascript/javascript-keycodes/
   // going up
   if (e.keyCode === 38 || e.keyCode === 87) {
-    if (yVelocity === 1) {
-      return;
-    }
+    if (yVelocity === 1) return;
     cabezaImage.src = "images/New Head arriba copia.png";
     xVelocity = 0;
     yVelocity = -1;
   }
   //going down
   if (e.keyCode === 40 || e.keyCode === 83) {
-    if (yVelocity === -1) {
-      return;
-    }
+    if (yVelocity === -1) return;
     cabezaImage.src = "images/New Head abajo.png";
     xVelocity = 0;
     yVelocity = 1;
   }
   //going right
   if (e.keyCode === 39 || e.keyCode === 68) {
-    if (xVelocity === -1) {
-      return;
-    }
+    if (xVelocity === -1) return;
     cabezaImage.src = "images/New Head derecha.png";
     xVelocity = 1;
     yVelocity = 0;
   }
   //going left
   if (e.keyCode === 37 || e.keyCode === 65) {
-    if (xVelocity === 1) {
-      return;
-    }
+    if (xVelocity === 1) return;
     cabezaImage.src = "images/New Head izq copia.png";
     xVelocity = -1;
     yVelocity = 0;
