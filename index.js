@@ -32,8 +32,8 @@ let yVelocity = 0;
 let foodX = Math.floor(Math.random() * tileCount);
 let foodY = Math.floor(Math.random() * tileCount);
 
-let slowAppleX = Math.floor(Math.random() * tileCount);
-let slowAppleY = Math.floor(Math.random() * tileCount);
+let slowAppleX;
+let slowAppleY;
 
 let velocidadMovimiento = 3;
 
@@ -57,10 +57,12 @@ function drawGame() {
 
   checkFoodCollision();
   drawFood();
+
   drawSnake();
   if (!gameIsOver) {
     setTimeout(drawGame, 800 / velocidadMovimiento);
   }
+  console.log(velocidadMovimiento);
   console.log(gameIsOver);
 
   /*setTimeOut give the opportunity to change 
@@ -121,7 +123,11 @@ function drawFood() {
     tileSize,
     tileSize
   );
-  if (scorePoints % 10 === 0) {
+  if (scorePoints % 10 === 0 && scorePoints > 1 && !slowAppleX) {
+    slowAppleX = Math.floor(Math.random() * tileCount);
+    slowAppleY = Math.floor(Math.random() * tileCount);
+  }
+  if (slowAppleX && slowAppleY) {
     ctx.drawImage(
       manzanaSlow,
       slowAppleX * tileCount,
@@ -141,10 +147,16 @@ function checkFoodCollision() {
     scorePoints++;
     scoreElement.innerText = "Score: " + scorePoints;
   }
+  if (scorePoints % 10 !== 0) {
+    slowAppleX = null;
+    slowAppleY = null;
+  }
   if (slowAppleX === headX && slowAppleY === headY) {
-    slowAppleX = Math.floor(Math.random() * tileCount);
-    slowAppleY = Math.floor(Math.random() * tileCount);
-    velocidadMovimiento--;
+    slowAppleX = null;
+    slowAppleY = null;
+    scorePoints++;
+    velocidadMovimiento = 5;
+    scoreElement.innerText = "Score: " + scorePoints;
   }
 }
 function gameOver() {
