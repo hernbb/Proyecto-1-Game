@@ -156,7 +156,7 @@ function checkFoodCollision() {
     slowAppleX = null;
     slowAppleY = null;
     scorePoints++;
-    velocidadMovimiento = 5;
+    velocidadMovimiento = velocidadMovimiento - 5;
     scoreElement.innerText = "Score: " + scorePoints;
   }
 }

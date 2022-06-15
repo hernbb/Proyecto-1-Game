@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./style.css" />
     <title>Snake</title>
   </head>
   <body>
@@ -13,21 +13,41 @@
     </header>
 
     <!-- GAME SCREEN -->
-    <div class="container">
-      <canvas id="snakeGame" width="400" height="400"></canvas>
-      <h3 id="score"></h3>
-      <button id="restart-btn">Restart!</button>
+    <div id="general">
+
+    <div class="lateral-izq">
+      <h3>How to play?</h3>
+      <ul>
+        <li>Grab apples to score points</li>
+        <li>You can trespass walls</li>
+        <li>Every 10pts you have a chance to slow your snake with the rainbow apple</li>
+        <li>You loose if the snake touches it self</li>
+        <li>To start playing press arrow keys or wasd keys</li>
+      </ul>
+      <div class="images-keys">
+        <img id="img" src="./images/PikPng.com_keys-png_959547.png" alt="keys" />
+        <img id="img" src="./images/PngItem_2036779.png" alt="keys" />
+      </div>
     </div>
 
+    <div class="container">
+      <canvas id="snakeGame" width="400" height="400"></canvas>
+      
+      <button id="restart-btn">Restart!</button>
+    </div>
+    <div>
+      <h3 id="score"></h3>
+    </div>
     <div id="gameOver">
       <img
-        src="images/game_over.png"
-        width="400"
-        height="400"
+        src="./images/game_over.png"
+        width="200"
+        height="200"
         alt="game-over"
       />
     </div>
-    <script src="index.js"></script>
+  
+    <script src="./index.js"></script>
     <!-- <script src="cabeza.js"></script> -->
   </body>
 </html>
