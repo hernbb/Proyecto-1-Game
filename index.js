@@ -208,6 +208,7 @@ function Keys(e) {
 }
 
 drawGame();
+
 // EVENT LISTSENERS
 
 const restartGame = document.getElementById("restart-btn");
