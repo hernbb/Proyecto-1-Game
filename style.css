@@ -17,7 +17,7 @@ body header {
   justify-content: center;
   flex-direction: column-reverse;
 }
-.lateral-izq {
+.container-2 {
   display: flex;
   justify-content: center;
   flex-direction: column;
