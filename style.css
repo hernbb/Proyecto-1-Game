@@ -80,5 +80,5 @@ canvas {
 #gameOver {
   display: none;
   position: absolute;
-  top: 100;
+  margin-bottom: 400px;
 }
